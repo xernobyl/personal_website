@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
+		<title>xrl://</title>
+    <script>
+function cssrules() {
+	const rules = {}
+	for (let i=0; i < document.styleSheets.length; ++i) {
+		var cssRules = document.styleSheets[i].cssRules;
+		for (var j=0; j<cssRules.length; ++j)
+		rules[cssRules[j].selectorText] = cssRules[j];
+	}
+	return rules;
+}
+
+function css_getclass(name) {
+var rules = cssrules();
+if (!rules.hasOwnProperty(name))
+		throw 'TODO: deal_with_notfound_case';
+return rules[name];
+}
+		</script>
+    <style>
+.goofy {
+  transition: background 0.125s ease-out, color 0.125s ease-out 0.125s;
+}
+
+.regular {
+  transition: background 0.125s ease-out, color 0.125s ease-out 0.125s;
+}
+
+html {
+  font-family: 'New Tegomin', serif;
+  font-size: 1.25em;
+}
+
+body {
+  margin: 0;
+}
+
+a, a:visited {
+  color: inherit;
+}
+
+#center {
+  width: 100%;
+  height: 100%;
+  /* display: flex;
+  align-items: center;
+  position: absolute; */
+}
+
+#center > div {
+  width: 100%;
+}
+
+#header a {
+  text-decoration: none;
+}
+
+#header a:hover {
+  text-decoration: underline;
+}
+
+#background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#header, #footer {
+  width: 100%;
+  text-align: center;
+  margin-top: 3em;
+  user-select: none;
+}
+
+#nav {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#nav > .text {
+  cursor: pointer;
+	display: inline-block;
+	transform: rotate(-45deg);
+	font-size: 0.75em;
+	line-height: 20px;
+	margin: 0px -0.25em;
+	transition: transform 0.5s ease-out 0s;
+  margin: auto 0.75em;
+}
+
+#nav > .text:hover {
+  transform: rotate(-22.5deg) scale(1.4);
+  transition: transform 0.0625s ease-in;
+  text-decoration: none;
+}
+
+#nav > * {
+  margin: auto 0.75em;
+}
+
+#nav > div {
+  display: inline-block;
+}
+
+.xrl {
+  font-weight: bold;
+}
+
+.xrl .blink {
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.icon {
+  transform: /*rotate(-11.25deg)*/ scale(1.25) translateY(2.5px);
+  transition: transform 0.5s ease-out;
+}
+
+.icon:hover {
+  transform: /*rotate(22.5deg)*/ scale(1.75) translateY(2.5px);
+  transition: transform 0.0625s ease-in;
+}
+
+#content {
+  columns: 18rem auto;
+  margin: 3em;
+  position: relative;
+}
+
+.document {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  text-align: center;
+}
+
+.document .thin {
+  width: 18rem;
+  margin: auto;
+}
+
+.document .float {
+  position: relative;
+  left: calc(20px + 0.5em);
+  float: right;
+}
+
+.document .float .close {
+  display: block;
+  cursor: pointer;
+}
+
+.document .small_talk {
+  text-align: justify;
+  margin: auto;
+}
+
+.document .profile_photo {
+  background-image: url(me.jpg);
+  transform: rotate(1.40625deg);
+  mix-blend-mode: luminosity;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 18rem;
+  height: 18rem;
+  box-shadow: inset 0 0 0.25em 0 #000;
+  margin: auto;
+  border-radius: 0.125em;
+}
+
+#content > .block {
+  margin: 2em 1em;
+  position: relative;
+  text-align: justify;
+}
+
+#content > .block > .title {
+  transform: rotate(-11.25deg);
+  padding: 0.1em 0.2em;
+  border-radius: 0.2em;
+  position: absolute;
+  font-weight: bold;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity .25s ease-out 2.5s;
+  z-index: 2;
+  box-shadow: 0 0 0.1em 0 #000;
+}
+
+#content > .block:hover > .title {
+  opacity: 1;
+  transition: opacity .25s ease-in;
+}
+
+#content > .block > .footer {
+  font-size: 0.8em;
+  transform: rotate(-11.25deg);
+  padding: 0.1em;
+  border-radius: 0.2em;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 2.5s ease-out;
+}
+
+#content > .block:hover > .footer {
+  opacity: 1;
+  transition: opacity .25s ease-in;
+}
+
+#content > .block > img {
+  width: 100%;
+  border-radius: 0.25em;
+  transform: rotate(2.8125deg);
+  z-index: 1;
+  opacity: 0.75;
+  transition: transform .25s ease-in;
+}
+
+#content > .block:hover > img {
+  border-radius: 0.125em;
+  transform: rotate(-1.40625deg);
+  z-index: 1;
+  opacity: 1;
+  transition: transform .125s ease-out;
+}
+
+    </style>
+	</head>
+	<body class="regular">
+    <canvas id="background"></canvas>
+		<div id="center">
+      <div>
+        <div id="header">
+          <div id="nav">
+            <div class="xrl">&lt;xrl&gt;<span class="blink">_</span></div>
+            <!-- <a href="">blog</a>
+            <a href="">projects</a> -->
+            <a class="text" onclick="showAbout()">about</a>
+            <a href="" class="text">contact</a>
+            <a href="https://twitter.com/xernobyl"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="arc" class="icon icon-twitter"><title>twitter</title><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+            <a href="https://github.com/xernobyl"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="arc" class="icon icon-github"><title>github</title><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            <a href="https://instagram.com/file_id.diz/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="arc" class="icon icon-instagram"><title>instagram</title><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          </div>
+        </div>
+        <div id="content">
+
+          <div style="display: none;" id="about" class="document regular">
+            <div class="thin">
+              <div class="float">
+                <a onclick="hideAbout()" class="close"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="arc" class="icon icon-close"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
+              </div>
+              <div class="mono_image profile_photo"></div>
+              <div class="small_talk">
+                <p>Hi!</p>
+                <p>Nice to see you. I'm Tiago, and this is my personal website. Looks awesome, right?</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="block">
+            <div class="goofy title">new and improved!</div>
+            <span>Hello! This is my new personal website.</span>
+            <p>Every few years I decide to create a new one... And this is the latest try. Don't expect any update frequently.</p>
+            <p>I still have no idea what this will shape into.</p>
+          </div>
+          <div class="block">
+            <div class="goofy title">title</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx <a href="#">xxx xxx xxx</a> xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">
+            <div class="goofy title">metaballs!</div>
+            <img src="article_image_1.jpg">
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+            <div class="goofy footer">2021 03 24</div>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">title title</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">title</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">faz de conta que é um artigo sobre shaders</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">metaballs!</div>
+            <img src="article_image_1.jpg">
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+            <div class="goofy footer">2021 03 24</div>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">title</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">faz de conta que é um artigo sobre shaders</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">metaballs!</div>
+            <img src="article_image_1.jpg">
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+            <div class="goofy footer">2021 03 24</div>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">faz de conta que é um artigo sobre shaders</div>
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">
+            <div class="goofy title">metaballs!</div>
+            <img src="article_image_1.jpg">
+            <span>xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</span>
+            <div class="goofy footer">2021 03 24</div>
+          </div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+          <div class="block">xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const color_schemes = [
+  "rgb(220, 226, 240)", "rgb(80, 88, 108)",
+  "rgb(249, 235, 222)", "rgb(129, 88, 84)",
+  "rgb(221, 169, 75)", "rgb(30, 65, 116)",
+  "rgb(255, 223, 185)", "rgb(164, 25, 61)",
+  "rgb(128, 99, 76)", "rgb(26, 175, 188)",
+  "rgb(106, 123, 162)", "rgb(255, 223, 222)",
+  "rgb(218, 90, 42)", "rgb(59, 24, 119)",
+  "rgb(230, 154, 141)", "rgb(95, 75, 139)",
+  "rgb(255, 255, 255)", "rgb(0, 0, 0)",
+  "rgb(173, 239, 209)", "rgb(0, 32, 63)",
+  "rgb(214, 237, 23)", "rgb(96, 96, 96)",
+  "rgb(151, 188, 98)", "rgb(44, 95, 45)",
+  "rgb(238, 164, 127)", "rgb(0, 83, 156)",
+  "rgb(156, 195, 213)", "rgb(0, 99, 178)",
+  "rgb(254, 231, 21)", "rgb(16, 24, 32)",
+  "rgb(211, 104, 127)", "rgb(203, 206, 145)",
+  "rgb(92, 200, 215)", "rgb(177, 98, 78)",
+  "rgb(252, 246, 245)", "rgb(123, 154, 204)",
+  "rgb(242, 170, 76)", "rgb(16, 24, 32)",
+  "rgb(212, 185, 150)", "rgb(160, 120, 85)",
+  "rgb(162, 162, 161)", "rgb(25, 81, 144)",
+  "rgb(199, 211, 212)", "rgb(96, 63, 131)",
+  "rgb(252, 246, 245)", "rgb(43, 174, 102)",
+  "rgb(110, 110, 109)", "rgb(250, 208, 201)",
+  "rgb(237, 111, 99)", "rgb(45, 41, 38)",
+  "rgb(97, 98, 71)", "rgb(218, 160, 61)",
+  "rgb(252, 246, 245)", "rgb(153, 0, 17)",
+  "rgb(214, 65, 97)", "rgb(54, 75, 68)",
+  "rgb(118, 82, 139)", "rgb(203, 206, 145)",
+  "rgb(51, 61, 121)", "rgb(250, 235, 239)",
+  "rgb(253, 210, 14)", "rgb(199, 45, 27)",
+  "rgb(117, 81, 57)", "rgb(242, 237, 215)",
+  "rgb(16, 24, 32)", "rgb(26, 122, 76)",
+  "rgb(255, 255, 255)", "rgb(249, 87, 0)",
+  "rgb(0, 83, 156)", "rgb(255, 214, 98)",
+  "rgb(52, 49, 72)", "rgb(215, 196, 158)",
+  "rgb(245, 199, 184)", "rgb(207, 131, 96)",
+  "rgb(60, 16, 83)", "rgb(223, 101, 137)",
+  "rgb(44, 95, 45)", "rgb(255, 231, 122)",
+  "rgb(158, 16, 48)", "rgb(233, 135, 126)",
+  "rgb(66, 32, 87)", "rgb(252, 249, 81)",
+  "rgb(146, 20, 22)", "rgb(75, 135, 139)",
+  "rgb(206, 74, 126)", "rgb(28, 28, 27)",
+  "rgb(253, 219, 39)", "rgb(0, 177, 210)",
+  "rgb(255, 153, 103)", "rgb(85, 134, 0)",
+  "rgb(161, 57, 65)", "rgb(189, 127, 55)",
+  "rgb(159, 193, 49)", "rgb(238, 223, 226)",
+  "rgb(237, 106, 102)", "rgb(0, 35, 156)",
+  "rgb(252, 231, 125)", "rgb(249, 97, 103)",
+  "rgb(41, 40, 38)", "rgb(249, 209, 66)",
+  "rgb(61, 21, 95)", "rgb(223, 103, 140)",
+  "rgb(72, 49, 212)", "rgb(204, 243, 129)",
+  "rgb(240, 160, 123)", "rgb(74, 39, 79)",
+  "rgb(60, 26, 91)", "rgb(255, 245, 72)",
+  "rgb(251, 234, 235)", "rgb(46, 60, 126)",
+  "rgb(29, 27, 27)", "rgb(236, 77, 54)",
+  "rgb(36, 54, 101)", "rgb(139, 216, 189)",
+  "rgb(236, 139, 94)", "rgb(20, 26, 70)",
+  "rgb(138, 170, 229)", "rgb(254, 254, 254)",
+  "rgb(255, 230, 124)", "rgb(41, 95, 46)",
+  "rgb(22, 27, 33)", "rgb(243, 169, 80)",
+  "rgb(7, 9, 82)", "rgb(239, 77, 160)",
+  "rgb(226, 177, 67)", "rgb(74, 23, 30)",
+  "rgb(247, 247, 249)", "rgb(210, 48, 44)",
+  "rgb(244, 168, 150)", "rgb(52, 133, 151)",
+  "rgb(160, 78, 246)", "rgb(231, 208, 68)",
+  "rgb(221, 198, 182)", "rgb(38, 34, 35)",
+  "rgb(154, 22, 31)", "rgb(244, 239, 234)",
+  "rgb(251, 248, 190)", "rgb(35, 78, 112)",
+  "rgb(144, 0, 255)", "rgb(255, 232, 245)",
+  "rgb(189, 143, 77)", "rgb(25, 25, 25)",
+  "rgb(247, 197, 204)", "rgb(204, 49, 61)",
+  "rgb(1, 61, 196)", "rgb(226, 211, 243)",
+  "rgb(236, 68, 155)", "rgb(153, 244, 67)",
+  "rgb(252, 237, 218)", "rgb(238, 78, 52)",
+  "rgb(219, 185, 143)", "rgb(150, 53, 31)",
+  "rgb(49, 119, 115)", "rgb(226, 208, 249)"
+]
+
+let background_color = [1.0, 1.0, 1.0]
+let foreground_color = [0.0, 0.0, 0.0]
+
+let dark_theme = false
+
+const flash = () => {
+  const scheme = Math.floor(Math.random() * color_schemes.length / 2) * 2
+  const inverted = Math.random() < 0.5
+  const style = document.styleSheets[1].cssRules[0].style
+  const style_inv = document.styleSheets[1].cssRules[1].style
+
+  let bg = style["color"] = style_inv["background-color"] = inverted ? color_schemes[scheme + 1] : color_schemes[scheme + 0]
+  let fg = style["background-color"] = style_inv["color"] = inverted ? color_schemes[scheme + 0] : color_schemes[scheme + 1]
+
+  console.log(bg, fg)
+
+  fg = fg.split(/(\d+)/)
+  bg = bg.split(/(\d+)/)
+  foreground_color = [Number(fg[1]) / 255.0, Number(fg[3]) / 255.0, Number(fg[5]) / 255.0]
+  background_color = [Number(bg[1]) / 255.0, Number(bg[3]) / 255.0, Number(bg[5]) / 255.0]
+
+  const foreground_luminance = 0.2126 * foreground_color[0] + 0.7152 * foreground_color[1] + 0.0722 * foreground_color[2]
+  const background_luminance = 0.2126 * background_color[0] + 0.7152 * background_color[1] + 0.0722 * background_color[2]
+
+  dark_theme = background_luminance < foreground_luminance
+}
+
+flash()
+
+/*const f = () => {
+  flash()
+  setTimeout(f, Math.random() * 5000 + 1000)
+}
+
+f()*/
+
+function showAbout() {
+  flash()
+  const element = document.getElementById("about")
+  element.style.display = "block"
+}
+
+function hideAbout() {
+  flash()
+  const element = document.getElementById("about")
+  element.style.display = "none"
+}
+
+/*
+// webgl background stuff
+const canvas = document.getElementById("background")
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth / 2
+  canvas.height = canvas.offsetHeight / 2
+}
+
+resizeCanvas()
+window.addEventListener("resize", resizeCanvas)
+const gl = canvas.getContext("webgl", {
+  alpha: false,
+  antialias: false,
+  depth: false,
+  failIfMajorPerformanceCaveat: false,
+  powerPreference: "low-power",
+  premultipliedAlpha: true,
+  preserveDrawingBuffer: false,
+  stencil: false,
+})
+
+function loop(timestamp) {
+  requestAnimationFrame(loop)
+
+  gl.clearColor(background_color[0], background_color[1], background_color[2], 0.0)
+  gl.clear(gl.COLOR_BUFFER_BIT)
+}
+
+loop()*/
+    </script>
+	</body>
+</html>
